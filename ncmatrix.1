@@ -1,0 +1,120 @@
+.TH NCMatrix 1 "Sun Feb 13 2005"
+.SH NAME
+NCMatrix - A network monitoring screen saver (derived from CMatrix by Chris Allegretta)
+.SH SYNOPSIS
+.B ncmatrix
+[\-abBflohnsVx] [\-u update] [\-C color] [\-H threshold] [\-I netdev] [\-R color] [\-T color] 
+.SH DESCRIPTION
+Shows a console mode scrolling 'Matrix' like screen in Linux with optional network packet activity.
+.SS OPTIONS
+.TP
+.I "\-a"
+Asynchronous scroll
+.TP
+.I "\-b"
+Bold characters on
+.TP
+.I "\-B"
+All bold characters (overrides \-b)
+.TP
+.I "\-f"
+Force the linux $TERM type to be on
+.TP
+.I "\-l"
+Linux mode (sets "matrix.fnt" font in console)
+.TP
+.I "\-o"
+Use old-style scrolling
+.TP
+.I "\-h, \-?"
+Print usage and exit
+.TP
+.I "\-n"
+No bold characters (overrides \-b and \-B)
+.TP
+.I "\-s"
+"Screensaver" mode, exits on first keystroke
+.TP
+.I "\-x"
+X window mode, use if your xterm is using mtx.pcf
+.TP
+.I "\-V"
+Print version information and exit
+.TP
+.I "\-u delay"
+Screen update delay 0 - 9, default 4
+.TP
+.I "\-C color"
+Use this color for matrix (default green). 
+Valid colors are green, red, blue, white, yellow, cyan, magenta and black.
+.TP
+.I "\-I netdev"
+ncmatrix will display transmitted and received packets as different colored
+characters entering the matrix.  You must use the -I option to tell
+ncmatrix what network device to monitor. This device must exist in /proc/net/dev
+and you must have read access to it.  (By default eth0 is used) examples would be:
+
+   -I ppp0
+   -I eth0
+   -I eth1
+   
+.TP
+.I "\-H threshold"
+This threshold will tell ncmatrix to wait a number of times before computing 
+the total number of packets that have been transmitted or recieved since the
+last time it checked netdev.  On slow connections, this can cause ncmatrix to
+intersperse single characters into the matrix.  We want a nice stream of chars
+to represent the network data.  Setting the -H number higher *should* minimize
+the number of sparse characters entering the matrix.  Depending on your processor
+speed and network speed, this can vary greatly.  An H value of 1000 on my AMD
+1.8Ghz was not noticeable.  On a Pentium 266 with no H value (more intensive)
+the load was around 17%.
+.TP
+.I "\-R color"
+Use this color for coloring received packets (default blue). 
+Valid colors are green, red, blue, white, yellow, cyan, magenta and black.
+.TP
+.I "\-T color"
+Use this color for transmitted packets (default red). 
+Valid colors are green, red, blue, white, yellow, cyan, magenta and black.
+.TP
+A sample command line to monitor eth0 would be:
+ncmatrix -s -b -u 10 -I eth0 -T red -R magenta
+.SS KEYSTROKES
+The following keystrokes are available during execution (unavailable in
+\-s mode)
+.TP
+.I "a"
+Toggle asynchronous scroll
+.TP
+.I "b"
+Random bold characters
+.TP
+.I "B"
+All bold characters
+.TP
+.I "n"
+Turn off bold characters
+.TP
+.I "0\-9"
+Adjust update speed
+.TP
+.I "! @ # $ % ^ & )"
+Change the color of the matrix to the corresponding color:
+! \- red, @ \- green, # \- yellow, $ \- blue, % \- magenta, ^ \- cyan,
+& \- white, ) \- black.
+.TP
+.I "q"
+Quit the program
+.SH BUGS
+This program is very CPU intensive.  Don't be surprised if it eats up over
+40% of your CPU at times.  TB: I have only seen about 17% on a P266 but still
+it stands to reason that the packet monitoring will not improve this.  There
+also seems to be something goofy with setting the console mode font.
+.SH HOMEPAGE
+The CMatrix homepage is currently at
+http://www.asty.org/cmatrix.  The NCMatrix has no homepage as of yet.  In fact 
+I don't even know where I'm going to link it from Freshmeat... we will see.
+.SH AUTHORS
+(CMatrix author) Chris Allegretta (chrisa [amp] asty [dot] org), with a lot of help from many other
+people. See README file for details.  NCMatrix was hacked from Chris's code by T. Bloedorn (vmlinux [amp] charter [dot] net).
